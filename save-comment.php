@@ -6,13 +6,15 @@
  * On doit d'abord vérifier que toutes les informations ont été entrées dans le formulaire
  * Si ce n'est pas le cas : un message d'erreur
  * Sinon, on va sauver les informations
- * 
+ *
  * Pour sauvegarder les informations, ce serait bien qu'on soit sur que l'article qu'on essaye de commenter existe
  * Il faudra donc faire une première requête pour s'assurer que l'article existe
  * Ensuite on pourra intégrer le commentaire
- * 
+ *
  * Et enfin on pourra rediriger l'utilisateur vers l'article en question
  */
+
+require_once('libraries/database.php');
 
 /**
  * 1. On vérifie que les données ont bien été envoyées en POST
@@ -55,10 +57,7 @@ if (!$author || !$article_id || !$content) {
  * 
  * PS : Ca fait pas genre 3 fois qu'on écrit ces lignes pour se connecter ?! 
  */
-$pdo = new PDO('mysql:host=localhost:8889;dbname=blogpoo;charset=utf8', 'root', 'root', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+$pdo = getPdo();
 
 $query = $pdo->prepare('SELECT * FROM articles WHERE id = :article_id');
 $query->execute(['article_id' => $article_id]);

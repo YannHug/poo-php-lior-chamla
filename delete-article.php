@@ -2,10 +2,12 @@
 
 /**
  * DANS CE FICHIER, ON CHERCHE A SUPPRIMER L'ARTICLE DONT L'ID EST PASSE EN GET
- * 
+ *
  * Il va donc falloir bien s'assurer qu'un paramètre "id" est bien passé en GET, puis que cet article existe bel et bien
  * Ensuite, on va pouvoir effectivement supprimer l'article et rediriger vers la page d'accueil
  */
+
+require_once('libraries/database.php');
 
 /**
  * 1. On vérifie que le GET possède bien un paramètre "id" (delete.php?id=202) et que c'est bien un nombre
@@ -24,10 +26,7 @@ $id = $_GET['id'];
  * 
  * PS : Vous remarquez que ce sont les mêmes lignes que pour l'index.php ?!
  */
-$pdo = new PDO('mysql:host=localhost:8889;dbname=blogpoo;charset=utf8', 'root', 'root', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+$pdo = getPdo();
 
 /**
  * 3. Vérification que l'article existe bel et bien
