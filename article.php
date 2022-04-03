@@ -12,6 +12,8 @@
  */
 
 require_once('libraries/database.php');
+require_once('libraries/utils.php');
+
 
 /**
  * 1. Récupération du param "id" et vérification de celui-ci
@@ -34,7 +36,7 @@ if (!$article_id) {
  * Attention, on précise ici deux options :
  * - Le mode d'erreur : le mode exception permet à PDO de nous prévenir violament quand on fait une connerie ;-)
  * - Le mode d'exploitation : FETCH_ASSOC veut dire qu'on exploitera les données sous la forme de tableaux associatifs
- * 
+ *
  * PS : Vous remarquez que ce sont les mêmes lignes que pour l'index.php ?!
  */
 $pdo = getPdo();
@@ -61,11 +63,10 @@ $query->execute(['article_id' => $article_id]);
 $commentaires = $query->fetchAll();
 
 /**
- * 5. On affiche 
+ * 5. On affiche
  */
 $pageTitle = $article['title'];
-ob_start();
-require('templates/articles/show.html.php');
-$pageContent = ob_get_clean();
-
-require('templates/layout.html.php');
+render('articles/show', compact('pageTitle', 'article', 'commentaires', 'article_id'));
+//compact('pageTitle','article','commentaires','article_id'))
+//est equivalent à écrire :
+//['pageTitle' => $pageTitle,'article' => $article,'commentaires' => $commentaires,'article_id' => $article_id]

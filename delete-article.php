@@ -8,6 +8,7 @@
  */
 
 require_once('libraries/database.php');
+require_once('libraries/utils.php');
 
 /**
  * 1. On vérifie que le GET possède bien un paramètre "id" (delete.php?id=202) et que c'est bien un nombre
@@ -46,5 +47,4 @@ $query->execute(['id' => $id]);
 /**
  * 5. Redirection vers la page d'accueil
  */
-header("Location: index.php");
-exit();
+redirect("index.php");
